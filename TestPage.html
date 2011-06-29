@@ -1,0 +1,132 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+<style type="text/css">
+
+.ad-thumbs{
+	position:relative;
+	margin: 0 auto;
+	width: 600px;
+	height: 200px;
+	overflow: hidden;
+	border-style:solid;
+	border-color: black;
+	border-width: 4px;
+}
+.ad-thumb-list{
+	position: relative;
+	list-style-type: none;
+	width:5000px;
+	padding: 0;
+	white-space: nowrap;
+}
+
+.ad-thumb-list li{
+	display: inline;
+}
+
+.ad-thumb-list li a{
+	float: left;
+	
+}
+</style>
+<script type="text/javascript" src="jquery-1.6.1.min.js"></script>
+<script type="text/javascript" src="scrollAdaptor.js"></script>
+<script type="text/javascript">
+var objAccessProxy = new Object();
+$(document).ready(function() {
+	
+	$('.ad-thumbs').scrollAdaptor({objAccessProxy:objAccessProxy});
+	$("#showItemBtn").bind("click", function(e){
+		objAccessProxy.bringItemIntoView($("#itemId").val());
+		});	
+});
+
+
+</script>
+</head>
+<body>
+<input id="itemId" type="text" value="0" />
+<button id="showItemBtn">Show</button> 
+<div class="ad-thumbs">
+<ul class="ad-thumb-list">
+	<li><a class="ad-thumb0 ad-active"
+		href="images/architecture/a1.jpg"> <img
+		src="images/architecture/thumbs/a1.jpg" alt=" " testLorem ipsum dolor
+		sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+		incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+		veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+		ea commodo consequat. Duis aute irure dolor in reprehenderit in
+		voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur
+		sint occaecat cupidatat non proident, sunt in culpa qui officia
+		deserunt mollit anim id est laborum." " style="opacity: 1;"> </a></li>
+	<li><a class="ad-thumb1" href="images/architecture/a11.jpg"> <img
+		src="images/architecture/thumbs/a11.jpg" alt=" " Lorem ipsum dolor sit
+		amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt
+		ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+		nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+		consequat. Duis aute irure dolor in reprehenderit in voluptate velit
+		esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+		cupidatat non proident, sunt in culpa qui officia deserunt mollit anim
+		id est laborum." " style="opacity: 0.7;"> </a></li>
+	<li><a class="ad-thumb2" href="images/architecture/a2.jpg"> <img
+		src="images/architecture/thumbs/a2.jpg" alt=" " Lorem ipsum dolor sit
+		amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt
+		ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+		nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+		consequat. Duis aute irure dolor in reprehenderit in voluptate velit
+		esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+		cupidatat non proident, sunt in culpa qui officia deserunt mollit anim
+		id est laborum." " style="opacity: 0.7;"> </a></li>
+	<li><a class="ad-thumb3" href="images/architecture/a3.jpg"> <img
+		src="images/architecture/thumbs/a3.jpg" alt=" " Lorem ipsum dolor sit
+		amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt
+		ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+		nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+		consequat. Duis aute irure dolor in reprehenderit in voluptate velit
+		esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+		cupidatat non proident, sunt in culpa qui officia deserunt mollit anim
+		id est laborum." " style="opacity: 0.7;"> </a></li>
+	<li><a class="ad-thumb4" href="images/architecture/a4.gif"> <img
+		src="images/architecture/thumbs/a4.gif" alt=" " Lorem ipsum dolor sit
+		amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt
+		ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+		nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+		consequat. Duis aute irure dolor in reprehenderit in voluptate velit
+		esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+		cupidatat non proident, sunt in culpa qui officia deserunt mollit anim
+		id est laborum." " style="opacity: 0.7;"> </a></li>
+	<li><a class="ad-thumb5" href="images/architecture/a6.jpg"> <img
+		src="images/architecture/thumbs/a6.jpg" alt=" " Lorem ipsum dolor sit
+		amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt
+		ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+		nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+		consequat. Duis aute irure dolor in reprehenderit in voluptate velit
+		esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+		cupidatat non proident, sunt in culpa qui officia deserunt mollit anim
+		id est laborum." " style="opacity: 0.7;"> </a></li>
+	<li><a class="ad-thumb6" href="images/architecture/a8.jpg"> <img
+		src="images/architecture/thumbs/a8.jpg" alt=" " Lorem ipsum dolor sit
+		amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt
+		ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+		nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+		consequat. Duis aute irure dolor in reprehenderit in voluptate velit
+		esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+		cupidatat non proident, sunt in culpa qui officia deserunt mollit anim
+		id est laborum." " style="opacity: 0.7;"> </a></li>
+	<li><a class="ad-thumb7" href="images/architecture/a9.jpg"> <img
+		src="images/architecture/thumbs/a9.jpg" alt=" " Lorem ipsum dolor sit
+		amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt
+		ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+		nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+		consequat. Duis aute irure dolor in reprehenderit in voluptate velit
+		esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+		cupidatat non proident, sunt in culpa qui officia deserunt mollit anim
+		id est laborum." " style="opacity: 0.7;"> </a></li>
+
+</ul>
+</div>
+</body>
+</html>
