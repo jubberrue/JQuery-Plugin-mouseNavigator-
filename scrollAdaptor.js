@@ -33,10 +33,8 @@
 				if(opts.objAccessProxy){	
 					opts.objAccessProxy.bringItemIntoView = function(index){bringItemIntoView(index);};
 				}
-				
 			 	
-			 	
-				// private function for debugging, only works with firefox
+				// private function for debugging, only works with firefox/firebug
 				function debug(msg) {
 					if (window.console && window.console.log)
 						window.console.log(msg);
@@ -70,8 +68,8 @@
 				};
 				
 				function shouldScroll(){
-					if(isEntireThumbContainerFitInViewPort()){
-						debug("thumb container smaller than viewPort, no scrolling " + contentContainer.innerWidth() + " : " + viewPort.innerWidth() );
+					if(isEntireContentContainerFitInViewPort()){
+						debug("item container smaller than viewPort, no scrolling " + contentContainer.innerWidth() + " : " + viewPort.innerWidth() );
 						return false;
 					};
 					
@@ -88,7 +86,7 @@
 							(Math.abs(mouse.pageY - centerPoint.y) < opts.deadZoneSpread)? true : false;
 				};
 				
-				function isEntireThumbContainerFitInViewPort(){
+				function isEntireContentContainerFitInViewPort(){
 					var lastItem = contentContainer.children().last();
 
 					return (opts.direction == DIRECTION_HORIZONTAL)?
@@ -98,17 +96,17 @@
 				
 				
 				function scrollBackward (dist){
-					var lastThumb = contentContainer.children().last();
+					var lastItem = contentContainer.children().last();
 					
 					if(opts.direction == DIRECTION_HORIZONTAL){
-						if((lastThumb.position().left + lastThumb.innerWidth() - Math.abs(contentContainer.position().left) ) < viewPort.innerWidth()){ 
+						if((lastItem.position().left + lastItem.innerWidth() - Math.abs(contentContainer.position().left) ) < viewPort.innerWidth()){ 
 							debug("cannot scroll more backwards");
 							return;
 						}		
 						
 						contentContainer.css("left", (contentContainer.position().left - dist) + "px");
 					}else{
-						if((lastThumb.position().top + lastThumb.innerHeight() - Math.abs(contentContainer.position().top) ) < viewPort.innerHeight()){ 
+						if((lastItem.position().top + lastItem.innerHeight() - Math.abs(contentContainer.position().top) ) < viewPort.innerHeight()){ 
 							debug("cannot scroll more backwards");
 							return;
 						}		
@@ -182,7 +180,6 @@
 				function isWithInContainer(targetItem, container){
 					var target = targetItem;
 					
-					//assume no relationship between target and container
 					if(opts.direction == DIRECTION_HORIZONTAL){
 						if(target.offset().left >= container.offset().left){
 							return (target.innerWidth() + target.offset().left <= (container.offset().left + container.innerWidth()))? true : false;
@@ -196,47 +193,41 @@
 							return false;
 						}
 					}
-							
-					
 				};
 				
 				function bringItemIntoView(index){
-					//@TODO add vertical functionality
-					 var thumb = $(contentContainer.children()[index]);
+					 var item = $(contentContainer.children()[index]);
 						
-					 if(thumb.length == 0) return;
+					 if(item.length == 0) return;
 					
-					 if(isWithInContainer(thumb, viewPort)){
+					 if(isWithInContainer(item, viewPort)){
 						 debug("index " + index + " is within the view port");
 					 }else{
 						 if(opts.direction == DIRECTION_HORIZONTAL){
-							 debug("inner width" + thumb.innerWidth());
-							 var thumbXDelta = thumb.offset().left - viewPort.offset().left;
+							 debug("inner width" + item.innerWidth());
+							 var itemXDelta = item.offset().left - viewPort.offset().left;
 							 var newContentContainerLeft;
-							 if(thumbXDelta < 0){
-								 newContentContainerLeft =  contentContainer.position().left + Math.abs(thumbXDelta);
+							 if(itemXDelta < 0){
+								 newContentContainerLeft =  contentContainer.position().left + Math.abs(itemXDelta);
 							 }else{
-								 newContentContainerLeft =  contentContainer.position().left - (thumbXDelta - viewPort.innerWidth() + thumb.innerWidth());
+								 newContentContainerLeft =  contentContainer.position().left - (itemXDelta - viewPort.innerWidth() + item.innerWidth());
 							 }
 							
 							 contentContainer.animate({left: newContentContainerLeft + "px"}, opts.showItemSpeed);
 						 }else{
-							 debug("inner height" + thumb.innerHeight());
-							 var thumbYDelta = thumb.offset().top - viewPort.offset().top;
+							 debug("inner height" + item.innerHeight());
+							 var itemYDelta = item.offset().top - viewPort.offset().top;
 							 var newContentContainerTop;
-							 if(thumbYDelta < 0){
-								 newContentContainerTop =  contentContainer.position().top + Math.abs(thumbYDelta);
+							 if(itemYDelta < 0){
+								 newContentContainerTop =  contentContainer.position().top + Math.abs(itemYDelta);
 							 }else{
-								 newContentContainerTop =  contentContainer.position().top - (thumbYDelta - viewPort.innerHeight() + thumb.innerHeight());
+								 newContentContainerTop =  contentContainer.position().top - (itemYDelta - viewPort.innerHeight() + item.innerHeight());
 							 }
 							
 							 contentContainer.animate({top: newContentContainerTop + "px"}, opts.showItemSpeed);
 						 }
-						 
-					 }
-					 
+					 } 
 				};
-				
 		 });
 	 };
 	 
