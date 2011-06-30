@@ -58,13 +58,13 @@ var objAccessProxy = new Object();
 var objVerAccess = new Object();
 $(document).ready(function() {
 	
-	$('.ad-thumbs').scrollAdaptor({objAccessProxy:objAccessProxy,direction:"horizontal"});
+	$('.ad-thumbs').scrollAdaptor({objAccessProxy:objAccessProxy,direction:"horizontal", invertedControl:false});
 	$("#showItemBtn").bind("click", function(e){
 		objAccessProxy.bringItemIntoView($("#itemId").val());
 		objVerAccess.bringItemIntoView($("#itemId").val());
 		});	
 	
-	$('.ad-thumbs1').scrollAdaptor({direction:"vertical", objAccessProxy:objVerAccess});
+	$('.ad-thumbs1').scrollAdaptor({direction:"vertical", objAccessProxy:objVerAccess, invertedControl:false});
 });
 
 

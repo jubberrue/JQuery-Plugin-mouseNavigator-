@@ -178,9 +178,14 @@
 				};
 				
 				function isScrollBackward(){
-					return (opts.direction == DIRECTION_HORIZONTAL)?
-							(mouse.pageX > centerPoint.x)? true:false : 
-							(mouse.pageY > centerPoint.y)? true:false; 
+					var result = false;
+					if(opts.direction == DIRECTION_HORIZONTAL){
+						result = (mouse.pageX > centerPoint.x)? true:false;
+					}else{
+						result = (mouse.pageY > centerPoint.y)? true:false;						
+					}
+					
+					return (!opts.invertedControl)? result : !result;
 				};
 				
 				function isWithInContainer(targetItem, container){
@@ -245,6 +250,7 @@
 			 	contentSelector:false,
 			 	showItemSpeed:20,
 			 	direction:"horizontal",
+			 	invertedControl:false,
 			 	objAccessProxy:false
 			 };
 	 
