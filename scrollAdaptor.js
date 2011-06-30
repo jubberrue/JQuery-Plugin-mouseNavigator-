@@ -1,5 +1,11 @@
 /**
  * 
+ * @TODO should have the ability to apply to the same containers both vertical and horizontal mouse
+ * scrolling. Will need to do the following:
+ * - currently it is assumed the first item is located at the beginning of the container should
+ * modify the code to allow the first item to be placed anywhere.
+ * 
+ * - allow for manual selection of first item and last item. 
  */
 (function($) {
 	 $.fn.scrollAdaptor = function(options) {

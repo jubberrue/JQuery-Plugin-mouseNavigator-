@@ -39,7 +39,7 @@ img{
 	display: block;
 	float: left;
 }
-/*
+
 .ad-thumb-list li a{
 	float: left;
 	display: block;
@@ -49,7 +49,7 @@ img{
 	border: 3px solid #CCC;
 	display: block;
 }
-*/
+
 </style>
 <script type="text/javascript" src="jquery-1.6.1.min.js"></script>
 <script type="text/javascript" src="scrollAdaptor.js"></script>
@@ -58,7 +58,7 @@ var objAccessProxy = new Object();
 var objVerAccess = new Object();
 $(document).ready(function() {
 	
-	$('.ad-thumbs').scrollAdaptor({objAccessProxy:objAccessProxy});
+	$('.ad-thumbs').scrollAdaptor({objAccessProxy:objAccessProxy,direction:"horizontal"});
 	$("#showItemBtn").bind("click", function(e){
 		objAccessProxy.bringItemIntoView($("#itemId").val());
 		objVerAccess.bringItemIntoView($("#itemId").val());
