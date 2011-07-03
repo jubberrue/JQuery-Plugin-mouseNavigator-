@@ -1,11 +1,8 @@
 /**
- * 
- * @TODO should have the ability to apply to the same containers both vertical and horizontal mouse
- * scrolling. Will need to do the following:
- * - currently it is assumed the first item is located at the beginning of the container should
- * modify the code to allow the first item to be placed anywhere.
- * 
- * - allow for manual selection of first item and last item. 
+ * @TODO : 
+ * - how to allow overriding of some of the functions (ie the functions exposed via the proxy)
+ * - test with webworkers (threads) in cased where both vertical and horizontal scrolling is applied to the same list.
+ * - see TODOs in the code 
  */
 (function($) {
 	 $.fn.scrollAdaptor = function(options) {
@@ -16,13 +13,16 @@
 		 opts = $.meta ? $.extend({}, opts, this.data()) : opts;
 		 
 		 return this.each(function(){
+			 	var DIRECTION_HORIZONTAL = "horizontal";
+			 	var DIRECTION_VERTICAL = "vertical";
+			 	
 			 	var viewPort=$(this);
 			 	var contentContainer=false;
 			 	var navInterval=false;
 			 	var centerPoint = {x:0,y:0};
 			 	var mouse;
-			 	var DIRECTION_HORIZONTAL = "horizontal";
-			 	var DIRECTION_VERTICAL = "vertical";
+			 	var firstItem=false;
+			 	var lastItem=false;
 
 			 	contentContainer = $(opts.contentSelector);
 				
@@ -38,6 +38,8 @@
 				
 				if(opts.objAccessProxy){	
 					opts.objAccessProxy.bringItemIntoView = function(index){bringItemIntoView(index);};
+					opts.objAccessProxy.setFirstItem = function(item){setFirstItem(item);};
+					opts.objAccessProxy.setLastItem = function(item){setLastItem(item);};
 				}
 			 	
 				// private function for debugging, only works with firefox/firebug
@@ -55,7 +57,7 @@
 					centerPoint.y = Math.round(viewPort.offset().top + (viewPort.innerHeight()/2));
 				};
 				
-				/* @TODO not finished*/
+				/* @TODO what else is needed here and when to call this function*/
 				function handleResize (e){
 					calculateCenterPoint();
 					
@@ -93,16 +95,17 @@
 				};
 				
 				function isEntireContentContainerFitInViewPort(){
-					var lastItem = contentContainer.children().last();
-
+					var lastItem = getLastItem();
+					var firstItem = getFirstItem();
+					
 					return (opts.direction == DIRECTION_HORIZONTAL)?
-								((lastItem.position().left + lastItem.innerWidth())<= viewPort.innerWidth()):
-								((lastItem.position().top + lastItem.innerHeight())<= viewPort.innerHeight());
+								((contentContainer.position().left + firstItem.position().left) >= 0 && (contentContainer.position().left + lastItem.position().left + lastItem.innerWidth())<= viewPort.innerWidth()):
+								((contentContainer.position().top + firstItem.position().top) >= 0 && (contentContainer.position().top + lastItem.position().top + lastItem.innerHeight())<= viewPort.innerHeight());
 				};
 				
 				
 				function scrollBackward (dist){
-					var lastItem = contentContainer.children().last();
+					var lastItem = getLastItem();
 					
 					if(opts.direction == DIRECTION_HORIZONTAL){
 						if((lastItem.position().left + lastItem.innerWidth() - Math.abs(contentContainer.position().left) ) < viewPort.innerWidth()){ 
@@ -124,13 +127,14 @@
 				
 				function scrollForward (dist){
 					if(opts.direction == DIRECTION_HORIZONTAL){
-						if(contentContainer.position().left > 0){
+						if(contentContainer.position().left + getFirstItem().position().left > 0){
 							debug("cannot scroll more fowards");
 							return;
 						}
+						
 						contentContainer.css("left", contentContainer.position().left + dist + "px");
 					}else{
-						if(contentContainer.position().top > 0){
+						if(contentContainer.position().top + getFirstItem().position().left > 0){
 							debug("cannot scroll more fowards");
 							return;
 						}
@@ -206,6 +210,9 @@
 					}
 				};
 				
+				/*
+				 * @TODO : do we need to account for border/margin/padding?
+				 */
 				function bringItemIntoView(index){
 					 var item = $(contentContainer.children()[index]);
 						
@@ -213,32 +220,55 @@
 					
 					 if(isWithInContainer(item, viewPort)){
 						 debug("index " + index + " is within the view port");
-					 }else{
-						 if(opts.direction == DIRECTION_HORIZONTAL){
-							 debug("inner width" + item.innerWidth());
-							 var itemXDelta = item.offset().left - viewPort.offset().left;
-							 var newContentContainerLeft;
-							 if(itemXDelta < 0){
-								 newContentContainerLeft =  contentContainer.position().left + Math.abs(itemXDelta);
-							 }else{
-								 newContentContainerLeft =  contentContainer.position().left - (itemXDelta - viewPort.innerWidth() + item.innerWidth());
-							 }
-							
-							 contentContainer.animate({left: newContentContainerLeft + "px"}, opts.showItemSpeed);
+						 return;
+					 }
+					 
+					 if(opts.direction == DIRECTION_HORIZONTAL){
+						 var itemXDelta = item.offset().left - viewPort.offset().left;
+						 var newContentContainerLeft;
+						 if(itemXDelta < 0){
+							 newContentContainerLeft =  contentContainer.position().left + Math.abs(itemXDelta);
 						 }else{
-							 debug("inner height" + item.innerHeight());
-							 var itemYDelta = item.offset().top - viewPort.offset().top;
-							 var newContentContainerTop;
-							 if(itemYDelta < 0){
-								 newContentContainerTop =  contentContainer.position().top + Math.abs(itemYDelta);
-							 }else{
-								 newContentContainerTop =  contentContainer.position().top - (itemYDelta - viewPort.innerHeight() + item.innerHeight());
-							 }
-							
-							 contentContainer.animate({top: newContentContainerTop + "px"}, opts.showItemSpeed);
+							 newContentContainerLeft =  contentContainer.position().left - (itemXDelta - viewPort.innerWidth() + item.innerWidth());
 						 }
-					 } 
+						
+						 contentContainer.animate({left: newContentContainerLeft + "px"}, opts.showItemSpeed);
+					 }else{
+						 var itemYDelta = item.offset().top - viewPort.offset().top;
+						 var newContentContainerTop;
+						 if(itemYDelta < 0){
+							 newContentContainerTop =  contentContainer.position().top + Math.abs(itemYDelta);
+						 }else{
+							 newContentContainerTop =  contentContainer.position().top - (itemYDelta - viewPort.innerHeight() + item.innerHeight());
+						 }
+						
+						 contentContainer.animate({top: newContentContainerTop + "px"}, opts.showItemSpeed);
+					 }
 				};
+				
+				function getFirstItem(){
+					if(!firstItem){
+						setFirstItem(contentContainer.children().first());
+					}
+					
+					return firstItem;
+				};
+				
+				function getLastItem(){
+					if(!lastItem){
+						setLastItem(contentContainer.children().last());
+					}
+					
+					return lastItem;
+				};
+				
+				function setFirstItem(item){
+					firstItem = item;
+				};
+				
+				function setLastItem(item){
+					lastItem = item;
+				}
 		 });
 	 };
 	 
