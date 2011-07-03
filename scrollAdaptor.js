@@ -36,10 +36,10 @@
 					.bind("mouseenter.scrollAdaptor", function(e){handleMouseOver(e);})
 					.bind("resize.scrollAdaptor", function(e){handleResize(e);});
 				
-				if(opts.objAccessProxy){	
-					opts.objAccessProxy.bringItemIntoView = function(index){bringItemIntoView(index);};
-					opts.objAccessProxy.setFirstItem = function(item){setFirstItem(item);};
-					opts.objAccessProxy.setLastItem = function(item){setLastItem(item);};
+				if(opts.objProxy){	
+					opts.objProxy.bringItemIntoView = function(index){bringItemIntoView(index);};
+					opts.objProxy.setFirstItem = function(item){setFirstItem(item);};
+					opts.objProxy.setLastItem = function(item){setLastItem(item);};
 				}
 			 	
 				// private function for debugging, only works with firefox/firebug
@@ -281,7 +281,7 @@
 			 	showItemSpeed:20,
 			 	direction:"horizontal",
 			 	invertedControl:false,
-			 	objAccessProxy:false
+			 	objProxy:false
 			 };
 	 
 	

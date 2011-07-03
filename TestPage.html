@@ -59,7 +59,7 @@ var objVerAccess = new Object();
 var objHorAccess = new Object();
 $(document).ready(function() {
 	
-	$('.ad-thumbs').scrollAdaptor({objAccessProxy:objAccessProxy, direction:"horizontal", invertedControl:false});
+	$('.ad-thumbs').scrollAdaptor({objProxy:objAccessProxy, direction:"horizontal", invertedControl:false});
 	
 	
 	
@@ -70,8 +70,8 @@ $(document).ready(function() {
 		
 		});	
 	
-	$('.ad-thumbs1').scrollAdaptor({direction:"vertical", objAccessProxy:objVerAccess, invertedControl:false, deadZoneSpread:5});
-	$('.ad-thumbs1').scrollAdaptor({direction:"horizontal", objAccessProxy:objHorAccess, invertedControl:false, deadZoneSpread:5});
+	$('.ad-thumbs1').scrollAdaptor({direction:"vertical", objProxy:objVerAccess, invertedControl:false, deadZoneSpread:5});
+	$('.ad-thumbs1').scrollAdaptor({direction:"horizontal", objProxy:objHorAccess, invertedControl:false, deadZoneSpread:5});
 	
 	objHorAccess.setLastItem($(".ad-thumbs1 .ad-thumb4"));
 });
