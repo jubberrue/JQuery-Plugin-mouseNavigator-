@@ -25,6 +25,7 @@
 
 .ad-thumbs1{
 	width:300px;
+	height:300px;
 }
  .ad-thumb-list1{
 width:600px;
@@ -59,7 +60,7 @@ var objVerAccess = new Object();
 var objHorAccess = new Object();
 $(document).ready(function() {
 	
-	$('.ad-thumbs').scrollAdaptor({objProxy:objAccessProxy, direction:"horizontal", invertedControl:false});
+	$('.ad-thumbs').scrollAdaptor({objProxy:objAccessProxy, direction:"horizontal", invertedControl:false,deadZoneSpread:100});
 	
 	
 	
@@ -70,10 +71,11 @@ $(document).ready(function() {
 		
 		});	
 	
-	$('.ad-thumbs1').scrollAdaptor({direction:"vertical", objProxy:objVerAccess, invertedControl:false, deadZoneSpread:5});
-	$('.ad-thumbs1').scrollAdaptor({direction:"horizontal", objProxy:objHorAccess, invertedControl:false, deadZoneSpread:5});
+	$('.ad-thumbs1').scrollAdaptor({direction:"vertical", objProxy:objVerAccess, invertedControl:false, deadZoneSpread:20, stepSize:2, minDur:5, maxDur:10});
+	$('.ad-thumbs1').scrollAdaptor({direction:"horizontal", objProxy:objHorAccess, invertedControl:false, deadZoneSpread:20, stepSize:2, minDur:5, maxDur:10});
 	
 	objHorAccess.setLastItem($(".ad-thumbs1 .ad-thumb4"));
+	
 });
 
 
