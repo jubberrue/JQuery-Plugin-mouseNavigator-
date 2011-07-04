@@ -3,6 +3,7 @@
  * - how to allow overriding of some of the functions (ie the functions exposed via the proxy)
  * - test with webworkers (threads) in cased where both vertical and horizontal scrolling is applied to the same list.
  * - see TODOs in the code 
+ * - when viewport has focus allow for navigation via arrow keys (or should it be a separate plugin?)
  */
 (function($) {
 	 $.fn.scrollAdaptor = function(options) {
@@ -19,7 +20,7 @@
 			 	var viewPort=$(this);
 			 	var contentContainer=false;
 			 	var navInterval=false;
-			 	var centerPoint = {x:0,y:0};
+			 	var centerPoint = {x:0,y:0}; //position relative to whole document
 			 	var mouse;
 			 	var firstItem=false;
 			 	var lastItem=false;
@@ -89,6 +90,7 @@
 				};
 				
 				function isInsideDeadZone(){
+					//both mouse and centerPoint values are relative to the document
 					return (opts.direction == DIRECTION_HORIZONTAL)?
 							(Math.abs(mouse.pageX - centerPoint.x) < opts.deadZoneSpread)? true : false :
 							(Math.abs(mouse.pageY - centerPoint.y) < opts.deadZoneSpread)? true : false;
@@ -166,16 +168,20 @@
 					startNavigation(calculateDuration(e));
 				};
 				
+				/* Calculate interval time between steps. 
+				 * Value is proportional of the maxDur / minDur values and
+				 * the distance beyond the dead zone 
+				 * */
 				function calculateDuration(e){
 					mouse = e;
 					var dist;
 					var halfContainer;
 					
 					if(opts.direction == DIRECTION_HORIZONTAL){
-						dist = Math.abs(mouse.pageX - centerPoint.x);
+						dist = Math.abs(mouse.pageX - centerPoint.x) - opts.deadZoneSpread;
 						halfContainer = viewPort.innerWidth()/2;
 					}else{
-						dist = Math.abs(mouse.pageY - centerPoint.y);
+						dist = Math.abs(mouse.pageY - centerPoint.y)- opts.deadZoneSpread;
 						halfContainer = viewPort.innerHeight()/2;
 					}
 					return (opts.maxDur - opts.minDur)*((halfContainer - dist)/(halfContainer)) + opts.minDur;
