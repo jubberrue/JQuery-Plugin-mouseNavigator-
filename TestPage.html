@@ -53,26 +53,26 @@ img{
 
 </style>
 <script type="text/javascript" src="jquery-1.6.1.min.js"></script>
-<script type="text/javascript" src="scrollAdaptor.js"></script>
+<script type="text/javascript" src="mouseNavigator.js"></script>
 <script type="text/javascript">
 var objAccessProxy = new Object();
 var objVerAccess = new Object();
 var objHorAccess = new Object();
 $(document).ready(function() {
 	
-	$('.ad-thumbs').scrollAdaptor({objProxy:objAccessProxy, direction:"horizontal", invertedControl:false,deadZoneSpread:100});
-	
-	
+	$('.ad-thumbs').mouseNavigator({objProxy:objAccessProxy, direction:"horizontal", invertedControl:false,deadZoneSpread:100});
 	
 	$("#showItemBtn").bind("click", function(e){
 		objAccessProxy.bringItemIntoView($("#itemId").val());
 		objVerAccess.bringItemIntoView($("#itemId").val());
 		objHorAccess.bringItemIntoView($("#itemId").val());
-		
+	
 		});	
 	
-	$('.ad-thumbs1').scrollAdaptor({direction:"vertical", objProxy:objVerAccess, invertedControl:false, deadZoneSpread:20, stepSize:2, minDur:5, maxDur:10});
-	$('.ad-thumbs1').scrollAdaptor({direction:"horizontal", objProxy:objHorAccess, invertedControl:false, deadZoneSpread:20, stepSize:2, minDur:5, maxDur:10});
+	$('.ad-thumbs1')
+		.mouseNavigator({direction:"vertical", objProxy:objVerAccess, invertedControl:false, deadZoneSpread:20, stepSize:2, minDur:5, maxDur:10})
+		.mouseNavigator({direction:"horizontal", objProxy:objHorAccess, invertedControl:false, deadZoneSpread:20, stepSize:2, minDur:5, maxDur:10});
+	//$('.ad-thumbs1').mouseNavigator({direction:"horizontal", objProxy:objHorAccess, invertedControl:false, deadZoneSpread:20, stepSize:2, minDur:5, maxDur:10});
 	
 	objHorAccess.setLastItem($(".ad-thumbs1 .ad-thumb4"));
 	

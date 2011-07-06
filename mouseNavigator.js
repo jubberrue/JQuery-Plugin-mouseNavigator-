@@ -6,9 +6,21 @@
  * - when viewport has focus allow for navigation via arrow keys (or should it be a separate plugin?)
  */
 (function($) {
-	 $.fn.scrollAdaptor = function(options) {
+	 $.fn.mouseNavigator = function(options) {
 
-		 var opts = $.extend({}, $.fn.scrollAdaptor.defaults, options);
+		 $.fn.mouseNavigator.defaults = {
+				 	stepSize:10,
+				 	minDur:10,
+				 	maxDur:20,
+				 	deadZoneSpread:25,
+				 	contentSelector:false,
+				 	showItemSpeed:20,
+				 	direction:"horizontal",
+				 	invertedControl:false,
+				 	objProxy:false
+				 };
+
+		 var opts = $.extend({}, $.fn.mouseNavigator.defaults, options);
 		 
 		 //@TODO need to test this out
 		 opts = $.meta ? $.extend({}, opts, this.data()) : opts;
@@ -32,10 +44,10 @@
 				};
 				
 				viewPort
-					.bind("mousemove.scrollAdaptor", function(e){handleMouseMove(e);})
-					.bind("mouseleave.scrollAdaptor", function(e){handleMouseOut(e);})
-					.bind("mouseenter.scrollAdaptor", function(e){handleMouseOver(e);})
-					.bind("resize.scrollAdaptor", function(e){handleResize(e);});
+					.bind("mousemove.mouseNavigator", function(e){handleMouseMove(e);})
+					.bind("mouseleave.mouseNavigator", function(e){handleMouseOut(e);})
+					.bind("mouseenter.mouseNavigator", function(e){handleMouseOver(e);})
+					.bind("resize.mouseNavigator", function(e){handleResize(e);});
 				
 				if(opts.objProxy){	
 					opts.objProxy.bringItemIntoView = function(index){bringItemIntoView(index);};
@@ -278,17 +290,6 @@
 		 });
 	 };
 	 
-	 $.fn.scrollAdaptor.defaults = {
-			 	stepSize:10,
-			 	minDur:10,
-			 	maxDur:20,
-			 	deadZoneSpread:25,
-			 	contentSelector:false,
-			 	showItemSpeed:20,
-			 	direction:"horizontal",
-			 	invertedControl:false,
-			 	objProxy:false
-			 };
 	 
 	
 })(jQuery);
