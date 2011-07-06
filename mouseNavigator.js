@@ -1,9 +1,12 @@
 /**
- * @TODO : 
- * - how to allow overriding of some of the functions (ie the functions exposed via the proxy)
- * - test with webworkers (threads) in cased where both vertical and horizontal scrolling is applied to the same list.
- * - see TODOs in the code 
- * - when viewport has focus allow for navigation via arrow keys (or should it be a separate plugin?)
+ * JQuery Plugin mouseNavigator
+ * 
+ * Written by Josiah Wong : jo_b_there@hotmail.com
+ * Using JQuery 1.6.1
+ * 
+ * Date: 06-07-2011
+ * 
+ * Licensed under the MIT (http://www.opensource.org/licenses/mit-license.php)
  */
 (function($) {
 	 $.fn.mouseNavigator = function(options) {
@@ -22,7 +25,6 @@
 
 		 var opts = $.extend({}, $.fn.mouseNavigator.defaults, options);
 		 
-		 //@TODO need to test this out
 		 opts = $.meta ? $.extend({}, opts, this.data()) : opts;
 		 
 		 return this.each(function(){
