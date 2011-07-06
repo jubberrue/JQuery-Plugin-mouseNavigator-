@@ -4,6 +4,7 @@
  * Written by Josiah Wong : jo_b_there@hotmail.com
  * Using JQuery 1.6.1
  * 
+ * Version : 1.0
  * Date: 06-07-2011
  * 
  * Licensed under the MIT (http://www.opensource.org/licenses/mit-license.php)
